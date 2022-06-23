@@ -6,6 +6,8 @@
 
 #include "linux_parser.h"
 
+#include <cassert>
+
 using std::stof;
 using std::string;
 using std::to_string;
@@ -68,7 +70,24 @@ vector<int> LinuxParser::Pids() {
 }
 
 // TODO: Read and return the system memory utilization
-float LinuxParser::MemoryUtilization() { return 0.0; }
+float LinuxParser::MemoryUtilization() { 
+  string line;
+  vector<string> memoryType; //memTotal, memFree, memAvail, Buffer
+  vector<float> memoryKB; //corresponding memory in KB
+  std::ifstream stream(kProcDirectory + kMeminfoFilename);
+  float temp1 {0}, temp2 {0};
+  if (stream.is_open()){
+    int i = 0;
+    while (std::getline(stream, line) && i < 3){ //First relevant 4 lines      
+        std::istringstream linestream(line);
+        linestream >> temp1 >> temp2; //temp1: Name, temp2: memory
+        memoryKB.emplace_back(temp2);
+        i++;
+    }
+  }
+  
+  return memoryKB[0]-memoryKB[1]; // Total Memory - Free Memory = Used Memory
+}
 
 // TODO: Read and return the system uptime
 long LinuxParser::UpTime() { return 0; }
