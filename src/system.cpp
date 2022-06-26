@@ -23,17 +23,17 @@ Processor& System::Cpu() { return cpu_; }
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() { return processes_; }
 
-// TODO: Return the system's kernel identifier (string)
+// TODO: Return the system's kernel identifier (string) -> DONE
 std::string System::Kernel() { 
     return LinuxParser::Kernel();
 }
 
-// TODO: Return the system's memory utilization
+// TODO: Return the system's memory utilization -> DONE
 float System::MemoryUtilization() {
      return LinuxParser::MemoryUtilization();
 }
 
-// TODO: Return the operating system name
+// TODO: Return the operating system name -> DONE
 std::string System::OperatingSystem() {
      return LinuxParser::OperatingSystem();
 }
