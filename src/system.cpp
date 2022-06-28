@@ -48,5 +48,11 @@ int System::TotalProcesses() {
       return LinuxParser::TotalProcesses();
 }
 
-// TODO: Return the number of seconds since the system started running
-long int System::UpTime() { return 0; }
+// TODO: Return the number of seconds since the system started running -> DONE
+long int System::UpTime() {
+     /*if (uptime != LinuxParser::UpTime()){
+          uptime = LinuxParser::UpTime();
+     }*/
+     //return uptime;
+     return LinuxParser::UpTime();
+}
