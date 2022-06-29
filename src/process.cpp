@@ -7,6 +7,7 @@
 #include "process.h"
 #include "linux_parser.h"
 #include "format.h"
+#include <unistd.h>
 
 using std::string;
 using std::to_string;
@@ -20,7 +21,14 @@ void Process::Pid(int pid) {
 }
 
 // TODO: Return this process's CPU utilization
-float Process::CpuUtilization() { return 0; }
+float Process::CpuUtilization() {
+    float HZ = sysconf(_SC_CLK_TCK);
+    long sys_uptime = LinuxParser::UpTime();
+    starttime_ = LinuxParser::UpTime(Pid());
+    totaltime_ = LinuxParser::ActiveJiffies(Pid()); 
+    float seconds = static_cast<float>(sys_uptime) - (static_cast<float>(starttime_)/HZ);
+    return 100*((static_cast<float>(totaltime_)/HZ)/seconds); 
+}
 
 // TODO: Return the command that generated this process
 string Process::Command() { return LinuxParser::Command(Pid()); }
