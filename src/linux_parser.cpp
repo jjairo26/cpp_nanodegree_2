@@ -111,6 +111,8 @@ long LinuxParser::Jiffies() {
   long sum {0};
   if (stream.is_open()){
       std::getline(stream, line); //first line
+      string delimiter = "  ";
+      line = line.substr(line.find(delimiter) + delimiter.length());
       std::istringstream linestream(line);
       long temp {0};
       while(linestream >> temp)
@@ -127,9 +129,11 @@ long LinuxParser::ActiveJiffies(int pid[[maybe_unused]]) { return 0; }
 long LinuxParser::ActiveJiffies() { // NonIdle = user (0) + nice (1) + system (2) + irq (5) + softirq (6) + steal (7)
   string line;
   std::ifstream stream(kProcDirectory + kStatFilename);
-  std::vector<long> jiffie_vec;
+  vector<long> jiffie_vec;
   if (stream.is_open()){
       std::getline(stream, line); //first line
+      string delimiter = "  ";
+      line = line.substr(line.find(delimiter) + delimiter.length());
       std::istringstream linestream(line);
       long temp {0};
       while(linestream >> temp)
@@ -147,6 +151,8 @@ long LinuxParser::IdleJiffies() { //Idle = idle (3) + iowait (4)
   std::vector<long> jiffie_vec;
   if (stream.is_open()){
       std::getline(stream, line); //first line
+      string delimiter = "  ";
+      line = line.substr(line.find(delimiter) + delimiter.length());
       std::istringstream linestream(line);
       long temp {0};
       while(linestream >> temp)
