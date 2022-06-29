@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "linux_parser.h"
+#include <unistd.h>
 
 #include <cassert>
 
@@ -272,4 +273,18 @@ string LinuxParser::User(int pid) {
 
 // TODO: Read and return the uptime of a process
 // REMOVE: [[maybe_unused]] once you define the function
-long LinuxParser::UpTime(int pid[[maybe_unused]]) { return 0; }
+long LinuxParser::UpTime(int pid) {
+  string pid_str = std::to_string(pid);
+  string temp, line;
+  vector<string> line_elements;
+  std::ifstream stream(kProcDirectory + pid_str + kStatFilename);
+
+  if (stream.is_open()){
+    std::getline(stream, line);
+    std::istringstream linestream(line);
+    while(linestream >> temp){ // Get all elements as strings and save in vector
+      line_elements.emplace_back(temp);
+    }
+  }
+  return std::stoi(line_elements[21])/sysconf(_SC_CLK_TCK); //return 22nd value (ticks) as int and perform division to obtain seconds
+  }
