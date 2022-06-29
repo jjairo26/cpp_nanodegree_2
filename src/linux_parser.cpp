@@ -163,8 +163,6 @@ long LinuxParser::IdleJiffies() { //Idle = idle (3) + iowait (4)
   return 0;
 }
 
-
-
 // TODO: Read and return CPU utilization -> DONE
 vector<string> LinuxParser::CpuUtilization() {
    vector<string> CPU_Util_vec;
@@ -210,7 +208,17 @@ int LinuxParser::RunningProcesses() {
 
 // TODO: Read and return the command associated with a process
 // REMOVE: [[maybe_unused]] once you define the function
-string LinuxParser::Command(int pid[[maybe_unused]]) { return string(); }
+string LinuxParser::Command(int pid) {
+  string line, command_str;
+  string pid_str = std::to_string(pid);
+  std::ifstream stream(kProcDirectory + pid_str + kCmdlineFilename);
+  if (stream.is_open()){
+      std::getline(stream, line);
+      std::istringstream linestream(line);
+      linestream >> command_str;
+  }
+   return command_str;
+}
 
 // TODO: Read and return the memory used by a process
 // REMOVE: [[maybe_unused]] once you define the function
