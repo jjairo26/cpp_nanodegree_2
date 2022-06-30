@@ -138,10 +138,12 @@ long LinuxParser::ActiveJiffies(int pid) {
            temp) {  // Get all elements as strings and save in vector
       line_elements.emplace_back(temp);
     }
-  }
-  // utime + stime + cutime + cstime(child process time included)
-  return std::stol(line_elements[13]) + std::stol(line_elements[14]) +
+    // utime + stime + cutime + cstime(child process time included)
+    return std::stol(line_elements[13]) + std::stol(line_elements[14]) +
          std::stol(line_elements[15]) + std::stol(line_elements[16]);
+  }
+
+  return 0;
 }
 
 // TODO: Read and return the number of active jiffies for the system -> DONE
