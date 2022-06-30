@@ -22,7 +22,7 @@ class System {
  private:
   Processor cpu_ = {};
   std::vector<Process> processes_ = {};
-  //long uptime {0};
+  // long uptime {0};
 };
 
 #endif

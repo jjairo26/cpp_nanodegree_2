@@ -6,6 +6,6 @@
 namespace Format {
 std::string ElapsedTime(long times);  // TODO: See src/format.cpp
 std::string InsertPrecedingZeroIfNecessary(int time);
-};                                    // namespace Format
+};  // namespace Format
 
 #endif

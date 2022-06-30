@@ -1,8 +1,8 @@
 #ifndef PROCESSOR_H
 #define PROCESSOR_H
 
-#include <vector>
 #include <string>
+#include <vector>
 
 class Processor {
  public:
@@ -10,7 +10,7 @@ class Processor {
 
   // TODO: Declare any necessary private members
  private:
-    float CPU_util_aggr;
+  float CPU_util_aggr;
 };
 
 #endif

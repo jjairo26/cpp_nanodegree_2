@@ -1,13 +1,14 @@
+#include "process.h"
+
 #include <unistd.h>
+
 #include <cctype>
 #include <sstream>
 #include <string>
 #include <vector>
 
-#include "process.h"
-#include "linux_parser.h"
 #include "format.h"
-#include <unistd.h>
+#include "linux_parser.h"
 
 using std::string;
 using std::to_string;
@@ -16,14 +17,14 @@ using std::vector;
 // TODO: Return this process's ID -> DONE
 int Process::Pid() { return pid_; }
 
-void Process::Pid(int pid) {
-    pid_ = pid;
-}
+void Process::Pid(int pid) { pid_ = pid; }
 
 // TODO: Return this process's CPU utilization -> DONE
 float Process::CpuUtilization() const { return cpu_; }
 
-void Process::CpuUtilization(int pid) { cpu_ = LinuxParser::CpuUtilization(pid); }
+void Process::CpuUtilization(int pid) {
+  cpu_ = LinuxParser::CpuUtilization(pid);
+}
 
 // TODO: Return the command that generated this process -> DONE
 string Process::Command() { return LinuxParser::Command(Pid()); }
@@ -40,5 +41,5 @@ long int Process::UpTime() { return LinuxParser::UpTime(Pid()); }
 // TODO: Overload the "less than" comparison operator for Process objects
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const {
-     return (this->CpuUtilization() < a.CpuUtilization());
+  return (this->CpuUtilization() < a.CpuUtilization());
 }
