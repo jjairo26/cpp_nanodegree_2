@@ -320,5 +320,6 @@ long LinuxParser::UpTime(int pid) {
       line_elements.emplace_back(temp);
     }
   }
-  return std::stoi(line_elements[21])/sysconf(_SC_CLK_TCK); //return 22nd value (ticks) as int and perform division to obtain seconds
+  float time = std::stof(line_elements[21])/sysconf(_SC_CLK_TCK); //22nd value (ticks) divided by HZ to obtain seconds
+  return static_cast<long>(time); 
   }

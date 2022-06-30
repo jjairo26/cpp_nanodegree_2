@@ -27,7 +27,7 @@ float Process::CpuUtilization() {
     starttime_ = LinuxParser::UpTime(Pid());
     totaltime_ = LinuxParser::ActiveJiffies(Pid()); 
     float seconds = static_cast<float>(sys_uptime) - (static_cast<float>(starttime_)/HZ);
-    return 100*((static_cast<float>(totaltime_)/HZ)/seconds); 
+    return (static_cast<float>(totaltime_)/HZ)/seconds; 
 }
 
 // TODO: Return the command that generated this process
