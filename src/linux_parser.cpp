@@ -269,7 +269,7 @@ string LinuxParser::Ram(int pid) {
     }
   }
 
-  return "0.0";
+  return "0.0"; // in case VmSize does not exist (zombie process)
 }
 
 // TODO: Read and return the user ID associated with a process -> DONE

@@ -42,5 +42,5 @@ long int Process::UpTime() { return LinuxParser::UpTime(Pid()); }
 // REMOVE: [[maybe_unused]] once you define the function
 bool Process::operator<(Process const& a) const {
   // the other way around to sort in descending order later
-  return (a.CpuUtilization() < this->CpuUtilization()); 
+  return (a.CpuUtilization() < this->CpuUtilization());
 }

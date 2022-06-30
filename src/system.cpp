@@ -27,7 +27,8 @@ Processor& System::Cpu() { return cpu_; }
 
 // TODO: Return a container composed of the system's processes
 vector<Process>& System::Processes() {
-  processes_.clear();
+  processes_.clear();  // clear process vector so that it does not keep growing
+                       // endlessly
   for (int Pid : LinuxParser::Pids()) {
     Process newProcess;
     newProcess.Pid(Pid);
@@ -55,10 +56,4 @@ int System::RunningProcesses() { return LinuxParser::RunningProcesses(); }
 int System::TotalProcesses() { return LinuxParser::TotalProcesses(); }
 
 // TODO: Return the number of seconds since the system started running -> DONE
-long int System::UpTime() {
-  /*if (uptime != LinuxParser::UpTime()){
-       uptime = LinuxParser::UpTime();
-  }*/
-  // return uptime;
-  return LinuxParser::UpTime();
-}
+long int System::UpTime() { return LinuxParser::UpTime(); }
