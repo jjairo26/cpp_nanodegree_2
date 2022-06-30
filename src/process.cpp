@@ -15,22 +15,23 @@ using std::to_string;
 using std::vector;
 
 // TODO: Return this process's ID -> DONE
-int Process::Pid() { //invariant for checking for unvalid pids
+int Process::Pid() {  // invariant for checking for unvalid pids
   if (pid_ < 32768 && pid_ > 0)
-   return pid_;
+    return pid_;
   else
-   return 0; 
+    return 0;
 }
 
 void Process::Pid(int pid) { pid_ = pid; }
 
 // TODO: Return this process's CPU utilization -> DONE
-float Process::CpuUtilization() const {  //invariant for dealing with unvalid cpu values
-  if (cpu_ > 1 && cpu_ < 0)
-    return cpu_; 
+float Process::CpuUtilization()
+    const {  // invariant for dealing with unvalid cpu values
+  if (cpu_ < 1 && cpu_ >= 0)
+    return cpu_;
   else
     return 0.0;
-  }
+}
 
 void Process::CpuUtilization(int pid) {
   cpu_ = LinuxParser::CpuUtilization(pid);

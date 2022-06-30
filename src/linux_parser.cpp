@@ -140,7 +140,7 @@ long LinuxParser::ActiveJiffies(int pid) {
     }
     // utime + stime + cutime + cstime(child process time included)
     return std::stol(line_elements[13]) + std::stol(line_elements[14]) +
-         std::stol(line_elements[15]) + std::stol(line_elements[16]);
+           std::stol(line_elements[15]) + std::stol(line_elements[16]);
   }
 
   return 0;
@@ -194,17 +194,16 @@ vector<string> LinuxParser::CpuUtilization() {
 }
 
 float LinuxParser::CpuUtilization(int pid) {
-  if (pid < 32768 && pid > 0){ //guard against unvalid pid values
-  float HZ = sysconf(_SC_CLK_TCK);
-  long sys_uptime = LinuxParser::UpTime();
-  long starttime = LinuxParser::UpTime(pid);
-  long totaltime = LinuxParser::ActiveJiffies(pid);
-  float seconds =
-      static_cast<float>(sys_uptime) - (static_cast<float>(starttime) / HZ);
-  return (static_cast<float>(totaltime) / HZ) / seconds;
-  }
-  else
-  return 0.0;
+  if (pid < 32768 && pid > 0) {  // guard against unvalid pid values
+    float HZ = sysconf(_SC_CLK_TCK);
+    long sys_uptime = LinuxParser::UpTime();
+    long starttime = LinuxParser::UpTime(pid);
+    long totaltime = LinuxParser::ActiveJiffies(pid);
+    float seconds =
+        static_cast<float>(sys_uptime) - (static_cast<float>(starttime) / HZ);
+    return (static_cast<float>(totaltime) / HZ) / seconds;
+  } else
+    return 0.0;
 }
 
 // TODO: Read and return the total number of processes -> DONE
@@ -273,7 +272,7 @@ string LinuxParser::Ram(int pid) {
     }
   }
 
-  return "0.0"; // in case VmSize does not exist (zombie process)
+  return "0.0";  // in case VmSize does not exist (zombie process)
 }
 
 // TODO: Read and return the user ID associated with a process -> DONE
