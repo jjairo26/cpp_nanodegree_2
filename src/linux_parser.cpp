@@ -100,7 +100,7 @@ long LinuxParser::UpTime() {
       std::getline(stream, line); // Only 1 line
       std::istringstream linestream(line);
       linestream >> uptime;
-      return uptime;
+      return uptime; //value in seconds
   }
   return 0;
  }
@@ -222,7 +222,7 @@ int LinuxParser::RunningProcesses() {
    return 0;
 }
 
-// TODO: Read and return the command associated with a process
+// TODO: Read and return the command associated with a process -> DONE
 // REMOVE: [[maybe_unused]] once you define the function
 string LinuxParser::Command(int pid) {
   string line, command_str;
@@ -321,5 +321,5 @@ long LinuxParser::UpTime(int pid) {
     }
   }
   float time = std::stof(line_elements[21])/sysconf(_SC_CLK_TCK); //22nd value (ticks) divided by HZ to obtain seconds
-  return static_cast<long>(time); 
+  return static_cast<long>(time); //value in seconds
   }
