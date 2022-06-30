@@ -194,6 +194,7 @@ vector<string> LinuxParser::CpuUtilization() {
 }
 
 float LinuxParser::CpuUtilization(int pid) {
+  if (pid < 32768 && pid > 0){ //guard against unvalid pid values
   float HZ = sysconf(_SC_CLK_TCK);
   long sys_uptime = LinuxParser::UpTime();
   long starttime = LinuxParser::UpTime(pid);
@@ -201,6 +202,9 @@ float LinuxParser::CpuUtilization(int pid) {
   float seconds =
       static_cast<float>(sys_uptime) - (static_cast<float>(starttime) / HZ);
   return (static_cast<float>(totaltime) / HZ) / seconds;
+  }
+  else
+  return 0.0;
 }
 
 // TODO: Read and return the total number of processes -> DONE
