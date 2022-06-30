@@ -188,6 +188,16 @@ vector<string> LinuxParser::CpuUtilization() {
    return CPU_Util_vec;
 }
 
+float LinuxParser::CpuUtilization(int pid) {
+    float HZ = sysconf(_SC_CLK_TCK);
+    long sys_uptime = LinuxParser::UpTime();
+    long starttime = LinuxParser::UpTime(pid);
+    long totaltime = LinuxParser::ActiveJiffies(pid); 
+    float seconds = static_cast<float>(sys_uptime) - (static_cast<float>(starttime)/HZ);
+    return (static_cast<float>(totaltime)/HZ)/seconds; 
+}
+
+
 // TODO: Read and return the total number of processes -> DONE
 int LinuxParser::TotalProcesses() {
     string line;
@@ -316,10 +326,11 @@ long LinuxParser::UpTime(int pid) {
   if (stream.is_open()){
     std::getline(stream, line);
     std::istringstream linestream(line);
-    while(linestream >> temp){ // Get all elements as strings and save in vector
+    while(linestream >> temp) // Get all elements as strings and save in vector
       line_elements.emplace_back(temp);
-    }
+      
+    float time = std::stof(line_elements[21])/sysconf(_SC_CLK_TCK); //22nd value (ticks) divided by HZ to obtain seconds
+    return static_cast<long>(time); //value in seconds
   }
-  float time = std::stof(line_elements[21])/sysconf(_SC_CLK_TCK); //22nd value (ticks) divided by HZ to obtain seconds
-  return static_cast<long>(time); //value in seconds
-  }
+  return 0; //process has no data (dead process?)
+}

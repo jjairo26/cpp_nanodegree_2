@@ -24,9 +24,11 @@ Processor& System::Cpu() {
 
 // TODO: Return a container composed of the system's processes  
 vector<Process>& System::Processes() {
+      processes_.clear();
       for (int Pid : LinuxParser::Pids()){
            Process newProcess;
            newProcess.Pid(Pid);
+           newProcess.CpuUtilization(Pid);
            processes_.emplace_back(newProcess);
       }
      std::sort(processes_.begin(), processes_.end());
